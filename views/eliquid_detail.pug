@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1= title
+  p #[strong category:] #{category.name}
+  p #[strong description:] #{eliquid.description}
+  p #[strong prices:] #[strong small:] #{eliquid.price.small}$ #[strong medium:] #{eliquid.price.medium}$ #[strong large:] #{eliquid.price.large}$
+  p #[strong stock:] #[strong small:] #{eliquid.number_in_stock.small} #[strong medium:] #{eliquid.number_in_stock.medium} #[strong large:] #{eliquid.number_in_stock.large}
+  p #[strong id:] #{eliquid._id}
+

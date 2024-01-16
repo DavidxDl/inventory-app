@@ -1,0 +1,14 @@
+extends layout
+
+block content 
+  h1= category.name
+
+  if eliquids_list.length
+    h4 Eliquids
+    ul
+      each eliquid in eliquids_list
+        li
+          a(href=eliquid.url) #{eliquid.name}
+  else
+    p no eliquids in this category
+

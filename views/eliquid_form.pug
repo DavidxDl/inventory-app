@@ -1,0 +1,81 @@
+extends layout
+
+block content
+
+  h1= title
+
+  form(method="post")
+    div(class="form-group")
+      label(for="name") Name:
+      input(
+        type="text"
+        required
+        id="name"
+        name="name"
+        placeholder="Pato"
+        class="form-control")
+
+    div(class="form-group")
+      label(for="description") description:
+      input(
+        type="text"
+        required
+        id="description"
+        name="description"
+        placeholder="some info about the eliquid"
+        class="form-control")
+    div(class="form-group")
+      label(for="category") Category:
+      select(class="form-control" id="category")
+        option -- Select a Category --
+        each category in category_list
+          option(value=category.name) #{category.name}
+    div(class="form-group")
+      label(for="price_small") Price Small:
+      input(
+        type="number"
+        required
+        id="price_small"
+        name="price_small"
+        class="form-control")
+    div(class="form-group")
+      label(for="price_medium") Price Medium:
+      input(
+        type="number"
+        required
+        id="price_medium"
+        name="price_medium"
+        class="form-control")
+    div(class="form-group")
+      label(for="price_large") Price Large:
+      input(
+        type="number"
+        required
+        id="price_large"
+        name="price_large"
+        class="form-control")
+    div(class="form-inline-group")
+      label(for="stock_small") Stock Small:
+      input(
+        type="number"
+        required
+        id="stock_small"
+        name="stock_small"
+        class="form-inline-control")
+    div(class="form-inline-group")
+      label(for="stock_medium" ) Stock Medium:
+      input(
+        type="number"
+        required
+        id="stock_medium"
+        name="stock_medium"
+        class="form-inline-control")
+    div(class="form-inline-group")
+      label(for="stock_large") Stock Large:
+      input(
+        type="number"
+        required
+        id="stock_large"
+        name="stock_large"
+        class="form-inline-control")
+    input(type="submit" class="btn btn-primary" value="Create Eliquid" style="margin-top: 5px;")

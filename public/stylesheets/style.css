@@ -1,0 +1,41 @@
+body {
+  font:
+    14px "Lucida Grande",
+    Helvetica,
+    Arial,
+    sans-serif;
+  display: flex;
+  gap: 20px;
+  height: 100vh;
+}
+
+span {
+  font-weigth: 0;
+  font-size: 0.9em;
+}
+
+nav {
+  background-color: #ddd;
+  height: 100%;
+  padding: 10px;
+}
+
+a {
+  color: #00b7ff;
+}
+
+main {
+  padding: 10px;
+  flex: 1;
+}
+
+.form-inline-group {
+  display: inline;
+}
+.form-inline-control {
+  width: 10%;
+  padding: 5px 0;
+  margin: 0 5px;
+  color: #495057;
+  border: 1px solid #ced4da;
+}

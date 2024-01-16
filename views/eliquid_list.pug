@@ -1,0 +1,13 @@
+extends layout
+
+
+block content
+  h1= title
+
+  if eliquid_list.length
+    div(style="text-align: center")
+      each eliquid in eliquid_list
+        dl
+          dt
+            a(href=eliquid.url) #{eliquid.name}
+          dd #{eliquid.description}
