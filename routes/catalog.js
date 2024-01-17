@@ -5,9 +5,9 @@ const eliquidController = require("../controllers/eliquidController");
 
 router.get("/", categoryController.categories_list);
 
-router.get("/categories/:id", categoryController.categories_detail);
-
 router.get("/eliquids/", eliquidController.index);
+
+router.get("/category/create", categoryController.categories_create_get);
 
 router.get("/eliquid/create", eliquidController.eliquid_create_get);
 
@@ -15,8 +15,10 @@ router.post("/eliquid/create", eliquidController.eliquid_create_post);
 
 router.get("/eliquid/:id/delete", eliquidController.eliquid_delete_get);
 
-router.post("/eliquid/:id/delete", eliquidController.eliquid_create_post);
+router.post("/eliquid/:id/delete", eliquidController.eliquid_delete_post);
 
 router.get("/eliquid/:id", eliquidController.eliquid_detail);
+
+router.get("/categories/:id", categoryController.categories_detail);
 
 module.exports = router;

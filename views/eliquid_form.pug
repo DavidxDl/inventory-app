@@ -13,6 +13,7 @@ block content
         id="name"
         name="name"
         placeholder="Pato"
+        value= eliquid === undefined ? "" : eliquid.name
         class="form-control")
 
     div(class="form-group")
@@ -22,14 +23,21 @@ block content
         required
         id="description"
         name="description"
+        value= eliquid === undefined ? "" : eliquid.description
         placeholder="some info about the eliquid"
         class="form-control")
     div(class="form-group")
       label(for="category") Category:
-      select(class="form-control" id="category")
+      select(class="form-control" id="category" name="category")
         option -- Select a Category --
         each category in category_list
-          option(value=category.name) #{category.name}
+          if eliquid
+            if eliquid.category.toString() === category._id.toString()
+              option(value=category._id selected) #{category.name}
+            else
+              option(value=category._id) #{category.name}
+          else
+            option(value=category._id) #{category.name}
     div(class="form-group")
       label(for="price_small") Price Small:
       input(
@@ -37,6 +45,7 @@ block content
         required
         id="price_small"
         name="price_small"
+        value= eliquid === undefined ? "" : eliquid.price.small
         class="form-control")
     div(class="form-group")
       label(for="price_medium") Price Medium:
@@ -45,6 +54,7 @@ block content
         required
         id="price_medium"
         name="price_medium"
+        value= eliquid === undefined ? "" : eliquid.price.medium
         class="form-control")
     div(class="form-group")
       label(for="price_large") Price Large:
@@ -53,6 +63,7 @@ block content
         required
         id="price_large"
         name="price_large"
+        value= eliquid === undefined ? "" : eliquid.price.large
         class="form-control")
     div(class="form-inline-group")
       label(for="stock_small") Stock Small:
@@ -61,6 +72,7 @@ block content
         required
         id="stock_small"
         name="stock_small"
+        value= eliquid === undefined ? "" : eliquid.number_in_stock.small
         class="form-inline-control")
     div(class="form-inline-group")
       label(for="stock_medium" ) Stock Medium:
@@ -69,6 +81,7 @@ block content
         required
         id="stock_medium"
         name="stock_medium"
+        value= eliquid === undefined ? "" : eliquid.number_in_stock.medium
         class="form-inline-control")
     div(class="form-inline-group")
       label(for="stock_large") Stock Large:
@@ -77,5 +90,10 @@ block content
         required
         id="stock_large"
         name="stock_large"
+        value= eliquid === undefined ? "" : eliquid.number_in_stock.large
         class="form-inline-control")
+    if errors
+      ul
+        each err in errors
+          li(style="color: red")= err.msg
     input(type="submit" class="btn btn-primary" value="Create Eliquid" style="margin-top: 5px;")
