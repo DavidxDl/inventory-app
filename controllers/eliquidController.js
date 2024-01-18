@@ -141,12 +141,135 @@ exports.eliquid_delete_get = asyncHandler(async (req, res, next) => {
   const eliquid = Eliquid.findById(req.params.id);
   res.render("eliquid_delete", { title: "Delete Eliquid", eliquid: eliquid });
 });
-exports.eliquid_delete_post = asyncHandler(async (req, res, next) => {
-  const eliquid = Eliquid.findById(req.params.id);
-  if (eliquid === null) {
-    res.redirect("/catalog/eliquids");
-  } else {
-    await Eliquid.findByIdAndDelete(req.params.id);
-    res.redirect("/catalog/eliquids");
-  }
+exports.eliquid_delete_post = [
+  body("admin_key").trim().escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const eliquid = Eliquid.findById(req.params.id);
+    if (eliquid === null) {
+      res.redirect("/catalog/eliquids");
+    } else if (req.body.admin_key !== process.env.ADMIN_KEY) {
+      res.render("eliquid_delete", {
+        title: "Delete Eliquid",
+        eliquid: eliquid,
+        error: "Wrong Password",
+      });
+    } else {
+      await Eliquid.findByIdAndDelete(req.params.id);
+      res.redirect("/catalog/eliquids");
+    }
+  }),
+];
+
+exports.eliquid_update_get = asyncHandler(async (req, res, next) => {
+  const [eliquid, categories] = await Promise.all([
+    Eliquid.findById(req.params.id),
+    Category.find(),
+  ]);
+
+  if (eliquid === null) res.redirect("/catalog/eliquids");
+  res.render("eliquid_form", {
+    title: "Update Eliquid",
+    eliquid: eliquid,
+    category_list: categories,
+  });
 });
+
+exports.eliquid_update_post = [
+  body("name", "Name must contain at least 3 characters")
+    .trim()
+    .isLength({ min: 3 })
+    .escape(),
+
+  body("description", "Description must contain at least 7 characters")
+    .trim()
+    .isLength({ min: 7 })
+    .escape(),
+
+  body("category", "category must not be empty")
+    .trim()
+    .escape()
+    .isLength({ min: 1 }),
+  body("price_small", "price must be at least 1$")
+    .trim()
+    .toInt()
+    .custom((value) => {
+      if (value < 1) throw new Error("value most be greater than zero");
+      return true;
+    })
+    .escape(),
+  body("price_medium", "price must be at least 1$")
+    .trim()
+    .toInt()
+    .escape()
+    .custom((value) => {
+      if (value < 1) throw new Error("value most be greater than zero");
+      return true;
+    }),
+  body("price_large", "price must be at least 1$")
+    .trim()
+    .toInt()
+    .escape()
+    .custom((value) => {
+      if (value < 1) throw new Error("value most be greater than zero");
+      return true;
+    }),
+  body("stock_small", "stock must be at least 1$")
+    .trim()
+    .toInt()
+    .escape()
+    .custom((value) => {
+      if (value < 1) throw new Error("value most be greater than zero");
+      return true;
+    }),
+  body("stock_medium", "stock must be at least 1$")
+    .trim()
+    .toInt()
+    .escape()
+    .custom((value) => {
+      if (value < 1) throw new Error("value most be greater than zero");
+      return true;
+    }),
+  body("stock_large", "stock must be at least 1$")
+    .trim()
+    .toInt()
+    .escape()
+    .custom((value) => {
+      if (value < 1) throw new Error("value most be greater than zero");
+      return true;
+    }),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+    const newEliquid = new Eliquid({
+      name: req.body.name,
+      description: req.body.description,
+      category: req.body.category,
+      price: {
+        small: req.body.price_small,
+        medium: req.body.price_medium,
+        large: req.body.price_large,
+      },
+      number_in_stock: {
+        small: req.body.small,
+        medium: req.body.medium,
+        large: req.body.large,
+      },
+      _id: req.params.id,
+    });
+
+    if (!errors.isEmpty()) {
+      const categories = await Category.find();
+      res.render("eliquid_form", {
+        title: "Update Eliquid",
+        eliquid: newEliquid,
+        category_list: categories,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      await Eliquid.findByIdAndUpdate(req.params.id, newEliquid, {});
+      res.redirect(newEliquid.url);
+    }
+  }),
+];

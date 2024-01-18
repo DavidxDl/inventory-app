@@ -11,4 +11,6 @@ block content
           a(href=eliquid.url) #{eliquid.name}
   else
     p no eliquids in this category
-
+  div(class="split-btns")
+    a(class="btn btn-primary" href=`${category.url}/update`) Update Category
+    a(class="btn btn-primary" href=`${category.url}/delete`) Delete Category

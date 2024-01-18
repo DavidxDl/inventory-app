@@ -39,3 +39,8 @@ main {
   color: #495057;
   border: 1px solid #ced4da;
 }
+
+.split-btns {
+  display: flex;
+  gap: 10px;
+}

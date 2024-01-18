@@ -7,5 +7,9 @@ block content
 
   form(method="POST")
     div.form-group
+      label(for="admin_key") Admin key:
+      input(style="margin-bottom: 10px" type="password" class="form-control" name="admin_key" id="admin_key" required)
       input.form-control(type="hidden" name="eliquidid" value=eliquid._id)
+      if error
+        p(style="color: red")= error
       button.btn.btn-danger(type="submit") Delete Eliquid
