@@ -101,7 +101,6 @@ exports.eliquid_create_post = [
       if (value < 1) throw new Error("value most be greater than zero");
       return true;
     }),
-
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
     const eliquid = new Eliquid({
@@ -118,6 +117,7 @@ exports.eliquid_create_post = [
         medium: req.body.stock_medium,
         large: req.body.stock_large,
       },
+      photo: req.file ? req.file.path.replace(/^public\//, "") : null,
     });
 
     if (!errors.isEmpty()) {
@@ -241,6 +241,7 @@ exports.eliquid_update_post = [
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
+    console.log(`photo is : ${req.body.photo}: ${req.file}`);
     const newEliquid = new Eliquid({
       name: req.body.name,
       description: req.body.description,
@@ -256,6 +257,7 @@ exports.eliquid_update_post = [
         large: req.body.large,
       },
       _id: req.params.id,
+      photo: req.file ? req.file.path.replace(/^public\//, "") : null,
     });
 
     if (!errors.isEmpty()) {

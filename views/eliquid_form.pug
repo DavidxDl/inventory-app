@@ -4,7 +4,7 @@ block content
 
   h1= title
 
-  form(method="post")
+  form(method="post" enctype="multipart/form-data")
     div(class="form-group")
       label(for="name") Name:
       input(
@@ -83,6 +83,7 @@ block content
         name="stock_medium"
         value= eliquid === undefined ? "" : eliquid.number_in_stock.medium
         class="form-inline-control")
+     
     div(class="form-inline-group")
       label(for="stock_large") Stock Large:
       input(
@@ -92,6 +93,9 @@ block content
         name="stock_large"
         value= eliquid === undefined ? "" : eliquid.number_in_stock.large
         class="form-inline-control")
+    div(class="form-group")
+      label(for="photo") Photo:
+      input(type="file" name="photo" id="photo" class="form-control-file")
     if errors
       ul
         each err in errors

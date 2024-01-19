@@ -2,6 +2,7 @@ extends layout
 
 block content
   h1= title
+  img(src=`/${eliquid.photo}` class="eliquid_image_full")
   p #[strong category:] #{category.name}
   p #[strong description:] #{eliquid.description}
   p #[strong prices:] #[strong small:] #{eliquid.price.small}$ #[strong medium:] #{eliquid.price.medium}$ #[strong large:] #{eliquid.price.large}$

@@ -16,6 +16,7 @@ const eliquidSchema = new Schema({
     medium: { type: Number, min: [1, "the minimum price is 1"] },
     large: { type: Number, min: [1, "the minimum price is 1"] },
   },
+  photo: String,
 });
 
 eliquidSchema.virtual("url").get(function () {
