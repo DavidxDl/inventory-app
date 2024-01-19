@@ -40,7 +40,8 @@ exports.categories_create_post = [
     .withMessage("enter a valid name (at least 3 characters)")
     .custom(async (value) => {
       const checkCategory = await Category.find({ name: value });
-      if (checkCategory) {
+      if (checkCategory.length) {
+        console.log("the category is " + checkCategory.length);
         throw new Error("Category name already created");
       } else {
         return true;
